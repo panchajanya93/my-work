@@ -1,0 +1,16 @@
+---
+ - name: Configuring master
+   become: yes
+   template:
+       src: slaves.j2
+       dest: /usr/local/spark/conf/slaves
+       owner: ec2-user
+       mode: 0644 
+
+
+
+ - name: Start the master and slaves
+   become: yes
+   shell: ./start-all.sh
+   args:
+     chdir: /usr/local/spark/sbin

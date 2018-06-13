@@ -1,0 +1,56 @@
+---
+ - name: Adding the spark environment variables to ~/.bash_profile
+   become: yes
+   lineinfile:
+       path: /home/ec2-user/.bash_profile
+       line: 'export SPARK_HOME=/usr/local/spark'
+
+
+ - name: Adding SPARK_HOME to ~/.bash_profile
+   become: yes
+   lineinfile:
+       path: /home/ec2-user/.bash_profile
+       line: 'export PATH=$PATH:$SPARK_HOME/bin'
+
+
+ - name: Sourcing the ~/.bash_profile
+   become: yes
+   shell: . ~/.bash_profile
+   args:
+     chdir: /home/ec2-user
+
+
+ - name: Change the ownership of $SPARK_HOME to user ec2-user
+   become: yes
+   shell: chown -R ec2-user /usr/local/spark
+   args:
+     chdir: /home/ec2-user
+
+# - name: Copy the spark-env.sh.template and rename it
+#   become: yes
+#   shell: cp /usr/local/spark/conf/spark-env.sh.template /usr/local/spark/conf/spark-env.sh
+#   args:
+#     chdir: /home/ec2-user
+
+
+# - name: Add java home to spark-env.sh
+#   become: yes
+#   lineinfile:
+#       path: /usr/local/spark/conf/spark-env.sh
+#       line: 'export JAVA_HOME=/usr'
+
+
+# - name: Add the spark master host
+#   become: yes
+#   lineinfile:
+#       path: /usr/local/spark/conf/spark-env.sh
+#       line: 'export SPARK_MASTER_HOST="172.31.17.193"
+
+
+ - name: Updating the spark-env.sh file
+   become: yes
+   template:
+       src: spark-env.sh.j2
+       dest: /usr/local/spark/conf/spark-env.sh
+       owner: ec2-user
+       mode: 0644 

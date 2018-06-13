@@ -1,0 +1,15 @@
+---
+ - name: Downloading Scala
+   become: yes
+   command: wget http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.rpm
+
+ - name: Installing scala
+   become: yes
+   yum:
+     name: /home/ec2-user/scala-2.11.8.rpm
+     state: present
+
+
+ - name: Remove Downloaded scala file
+   become: yes
+   command: rm -rf scala-2.11.8.rpm
