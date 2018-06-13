@@ -53,4 +53,10 @@
        src: spark-env.sh.j2
        dest: /usr/local/spark/conf/spark-env.sh
        owner: ec2-user
-       mode: 0644 
+       mode: 0644
+
+ - name: Changing the permissions of spark-env.sh
+   become: yes
+   shell: chown --reference=spark-env.sh.template spark-env.sh
+   args:
+     chdir: /usr/local/spark/conf 

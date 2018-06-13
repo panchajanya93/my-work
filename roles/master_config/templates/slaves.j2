@@ -1,4 +1,0 @@
-
-
-
-node_ip: "{{ groups['slaves'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}" 

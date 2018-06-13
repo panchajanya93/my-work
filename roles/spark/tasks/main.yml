@@ -1,4 +1,11 @@
 ---
+ - name: Remove the extracted file
+   become: yes
+   shell: rm -rf spark-2.3.0-bin-hadoop2.7
+   args:
+     chdir: /usr/local/spark
+
+ 
  - name: Downloading spark
    become: yes
    command: wget http://www-us.apache.org/dist/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
@@ -15,10 +22,6 @@
    become: yes
    command: mv /home/ec2-user/spark-2.3.0-bin-hadoop2.7 /usr/local/spark
 
-
- - name: Remove the extracted file
-   become: yes
-   command: rm -rf spark-2.3.0-bin-hadoop2.7
 
  - name: Remove the downloaded spark.tgz
    become: yes
